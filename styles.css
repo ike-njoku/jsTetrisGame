@@ -1,6 +1,27 @@
+/* remove defaults from html */
+
 html,
 body {
     padding: 0px;
     margin: 0px;
     background-color: rgb(15, 46, 77);
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+    text-align: center;
+}
+
+
+/* container(tetris container) */
+
+.container {
+    background-color: gainsboro;
+    padding: 1%;
+    width: 80%;
+    height: 80%;
+    margin: auto;
+    /* display */
+    display: grid;
+    grid-template-columns: 10%;
+    grid-template-rows: 10%;
 }
