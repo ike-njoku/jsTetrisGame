@@ -18,6 +18,25 @@ body {
     border: solid;
 }
 
+
+/* colours of tetraminoes */
+
 .T-Tetramino {
     background-color: red;
+}
+
+.L-Tetramino {
+    background-color: orangered;
+}
+
+.Box-Tetramino {
+    background-color: yellow;
+}
+
+.Z-Tetramino {
+    background-color: deepskyblue;
+}
+
+.I-Tetramino {
+    background-color: lightseagreen;
 }
