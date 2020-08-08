@@ -30,13 +30,22 @@ while (numberOfGridBoxesBuilt < totalNumberOfGridBoxes) {
     tetrisEnvironment.appendChild(buildGridBox);
 
     //---------- divide the environment into rows and columns
-    // grid Rows
-    if (numberOfGridBoxesBuilt % 11 == 0) {
+    // grid position (y-coordinate)
+    let y = 0;
+    if (numberOfGridBoxesBuilt % 10 == 0) y = 10;
+    else y = numberOfGridBoxesBuilt % 10;
+
+    buildGridBox.setAttribute('data-gridColumn', y);
+
+    // grid rows
+    if (numberOfGridBoxesBuilt % 10 == 0 || numberOfGridBoxesBuilt % 10 == 1) {
         buildGridBox.setAttribute('data-gridRow', gridRows);
         gridRows++;
     }
-    //    grid Columns
-    buildGridBox.setAttribute('data-gridColumn', numberOfGridBoxesBuilt % 11);
+
+
+    // define the columns at the edges
+    if (numberOfGridBoxesBuilt % 10 == 0 || numberOfGridBoxesBuilt % 10 == 1) buildGridBox.setAttribute('data-edgeColumn', true);
 
     // inncrement the number of gridboxes built by adding one
     numberOfGridBoxesBuilt++;
@@ -125,7 +134,7 @@ class Tetris {
         // define the tetris environment
         let tetrisEnvironment = document.querySelector('[data-tetrisContainer]');
         // create the grid boxes inside the tetris environment
-        let totalNumberOfGridBoxes = 221;
+        let totalNumberOfGridBoxes = 220;
         // number of grid boxes built
         let numberOfGridBoxesBuilt = 1;
         // grid rows (for easily placing tetraminoes)
@@ -143,13 +152,23 @@ class Tetris {
             tetrisEnvironment.appendChild(buildGridBox);
 
             //---------- divide the environment into rows and columns
-            // grid Rows
-            if (numberOfGridBoxesBuilt % 11 == 0) {
+            // grid position (y-coordinate)
+            let y = 0;
+            if (numberOfGridBoxesBuilt % 10 == 0) y = 10;
+            else y = numberOfGridBoxesBuilt % 10;
+
+            buildGridBox.setAttribute('data-gridColumn', y);
+
+            // grid rows
+            if (numberOfGridBoxesBuilt % 10 == 0 || numberOfGridBoxesBuilt % 10 == 1) {
                 buildGridBox.setAttribute('data-gridRow', gridRows);
                 gridRows++;
             }
-            //    grid Columns
-            buildGridBox.setAttribute('data-gridColumn', numberOfGridBoxesBuilt % 11);
+
+
+            // define the columns at the edges
+            if (numberOfGridBoxesBuilt % 10 == 0 || numberOfGridBoxesBuilt % 10 == 1) buildGridBox.setAttribute('data-edgeColumn', true);
+
 
             // inncrement the number of gridboxes built by adding one
             numberOfGridBoxesBuilt++;
@@ -170,21 +189,42 @@ class Tetris {
 
     // draw tetramino
     drawTetramino(tetraminoCssClassName, tetraminoShapeLayout, startRow, startColumn) {
+
         //    define the value of the start point
         let startPoint = startColumn * startRow;
-        let tetraminoCoordinates = [];
+        // create an empty array to hold the coordinates of the gridBoxes in the tetramino to colour
+        this.tetraminoCoordinates = [];
 
         tetraminoShapeLayout.forEach((gridPosition) => {
+            // add the startPosition to the coordinates  received in the tetraminoShapeLayout
             gridPosition = startPoint + gridPosition;
-            tetraminoCoordinates.push(gridPosition);
+            // append the  coordinates generated from the previous line of code to the new array (tetraminoCoordinates)
+            this.tetraminoCoordinates.push(gridPosition);
         });
-
+        // add colouring to the tetramino using its className
         gridBoxes.forEach((gridBox) => {
-            tetraminoCoordinates.forEach((coordinate) => {
-                if (gridBox.getAttribute('data-gridbox') == coordinate) gridBox.classList.add(tetraminoCssClassName);
+            this.tetraminoCoordinates.forEach((coordinate) => {
+                if (gridBox.getAttribute('data-gridbox') == coordinate) {
+                    // assign values
+                    this.tetraminoGridBoxes = gridBox;
+                    this.tetraminoName = tetraminoCssClassName;
+                    this.tetraminoGridBoxes.classList.add(this.tetraminoName);
+                };
             });
         });
     }
+
+
+    // ----------clean Tetraamino
+    cleanTetramino() {
+        // loop the gridBoxes and the current tetramino coordinates. if there is a mach between them, remove the tetramino Name from the classList
+        gridBoxes.forEach((gridBox) => {
+            this.tetraminoCoordinates.forEach((gridBoxCoordinate) => {
+                if (gridBox.getAttribute('data-gridbox') == gridBoxCoordinate) gridBox.classList.remove(this.tetraminoName);
+            })
+        })
+    }
+
 
     // ---------tetraminoes
     selectTetramino() {
@@ -209,32 +249,62 @@ class Tetris {
         //------------ tetramino position
         // by default, let the tetraminoes start to drop from close to the center of the tetris container
         this.tetraminoRow = 1;
-        this.tetraminoColumn = 5;
+        this.tetraminoColumn = 1;
         // --------------draw the tetramino
         // pass parameters to the drawTetramino method to actually draw the tetramino that has been defined here
         this.drawTetramino(this.tetraminoName, this.tetraminoDefaultView, this.tetraminoRow, this.tetraminoColumn);
 
-
     }
 
     //---------------------------- rotate Tetramino
+
     rotateTetramino() {}
 
+
+
     //---------------------- move tetramino left
-    moveTetraminoLeft() {}
+    moveTetraminoLeft() {
+        // clean the tetramino
+        this.cleanTetramino()
+            // subtract 1 from the tetramino column coordinate so that it tends to the left
+        this.tetraminoColumn -= 1;
+        // redraw the tetramino with the new coordinates
+        this.drawTetramino(this.tetraminoName, this.tetraminoDefaultView, this.tetraminoRow, this.tetraminoColumn);
+
+    }
 
     //----------------------- move tetramino right
-    moveTetraminoRight() {}
+    moveTetraminoRight() {
+
+        // check if the tetraminoGridboxes is in the edge
+        if (this.tetraminoGridBoxes.getAttribute('data-edgeColumn') == 'true') {
+            console.log('hello world');
+        };
+
+
+        // clean the tetramino
+        this.cleanTetramino();
+        // add 1 to the tetramino column coordinate so that it tends to the left
+        this.tetraminoColumn += 1;
+        // redraw the tetramino with the new coordinates
+        this.drawTetramino(this.tetraminoName, this.tetraminoDefaultView, this.tetraminoRow, this.tetraminoColumn);
+    }
 
     //------------------ move tetramino down by the second (call on interval)
-    moveTetraminoDown() {}
+    moveTetraminoDown() {
+        // clean the current tetramino position
+        this.cleanTetramino();
+        // increment the column to start displaying by 10, as 10 columns will equal one row
+        this.tetraminoColumn += 10;
+        // draw the tetramino again with  the new coordinates
+        this.drawTetramino(this.tetraminoName, this.tetraminoDefaultView, this.tetraminoRow, this.tetraminoColumn);
+    }
 
 
     //---------------------- pull tetramino down (after user has selected a shape and wants to save time)
     pullTetraminoDown() {}
 
-    //------------------------------ update the display
-    updateDisplay() {}
+
 }
 
 // create an instanceof the tetris game
@@ -244,4 +314,5 @@ const tetris = new Tetris();
 // // get all the gridBoxes
 // const gridBoxes = document.querySelectorAll('[data-gridBox]');
 
-tetris.selectTetramino()
+tetris.selectTetramino();
+setInterval(() => tetris.moveTetraminoRight(), 1000)
