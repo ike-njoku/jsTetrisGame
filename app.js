@@ -64,7 +64,7 @@ const tetraminoes = [
         // view one
         [1, 2, 3, 12],
         // rotation two
-        [1, 12, 11, 21],
+        [1, 11, 12, 21],
         // rotation three
         [11, 2, 12, 13],
         // rotation four
@@ -165,10 +165,8 @@ class Tetris {
                 gridRows++;
             }
 
-
             // define the columns at the edges
             if (numberOfGridBoxesBuilt % 10 == 0 || numberOfGridBoxesBuilt % 10 == 1) buildGridBox.setAttribute('data-edgeColumn', true);
-
 
             // inncrement the number of gridboxes built by adding one
             numberOfGridBoxesBuilt++;
@@ -243,51 +241,89 @@ class Tetris {
         this.tetraminoViewThree = this.tetramino[3];
         this.tetraminoViewFour = this.tetramino[4];
 
+        // array of tetramino views  (you should be able to loop through this array, find the currently displayed array and then display the next one or previous one);
+        this.tetraminoViews = [this.tetraminoViewOne, this.tetraminoViewTwo, this.tetraminoViewThree, this.tetraminoViewFour];
+
 
         // Default tetramino view
-        this.tetraminoDefaultView = this.tetraminoViewOne;
+        this.tetraminoView = this.tetraminoViewOne;
         //------------ tetramino position
         // by default, let the tetraminoes start to drop from close to the center of the tetris container
         this.tetraminoRow = 1;
-        this.tetraminoColumn = 1;
+        this.tetraminoColumn = 4;
         // --------------draw the tetramino
         // pass parameters to the drawTetramino method to actually draw the tetramino that has been defined here
-        this.drawTetramino(this.tetraminoName, this.tetraminoDefaultView, this.tetraminoRow, this.tetraminoColumn);
+        this.drawTetramino(this.tetraminoName, this.tetraminoView, this.tetraminoRow, this.tetraminoColumn);
 
     }
 
     //---------------------------- rotate Tetramino
 
-    rotateTetramino() {}
+    rotateTetramino() {
+        //  clean the currently displayed tetramino views
+        this.cleanTetramino();
+        // find the index position of the current view position
+        let index = this.tetraminoViews.indexOf(this.tetraminoView);
+
+        // increment the index
+        index++;
+        // reset the value of the index if it goes out of range
+        if (index >= this.tetraminoViews.length) index = 0;
+        // reassign values
+        this.tetraminoView = this.tetraminoViews[index];
+        // redraw the tetramino
+        this.drawTetramino(this.tetraminoName, this.tetraminoView, this.tetraminoRow, this.tetraminoColumn);
+
+    }
 
 
 
     //---------------------- move tetramino left
     moveTetraminoLeft() {
+
+        //check if adding 1 to the present grid columns would make it spill over beyond the edge columns
+        // select all the edgecolumns and loop through them.
+        let edgecolumns = document.querySelectorAll('[data-edgecolumn]');
+        edgecolumns.forEach((edgecolumn) => {
+            // loop through the present grid coordinates(positions) check if adding one would make it display beyound the edge column
+            this.tetraminoCoordinates.forEach((coordinate) => {
+                if (edgecolumn.getAttribute('data-gridBox') == coordinate - 1) clearInterval(m);
+            })
+        });
+
         // clean the tetramino
-        this.cleanTetramino()
-            // subtract 1 from the tetramino column coordinate so that it tends to the left
+        this.cleanTetramino();
+        // subtract 1 from the tetramino column coordinate so that it tends to the left
+
         this.tetraminoColumn -= 1;
+
+
         // redraw the tetramino with the new coordinates
-        this.drawTetramino(this.tetraminoName, this.tetraminoDefaultView, this.tetraminoRow, this.tetraminoColumn);
+        this.drawTetramino(this.tetraminoName, this.tetraminoView, this.tetraminoRow, this.tetraminoColumn);
+
+
 
     }
 
     //----------------------- move tetramino right
     moveTetraminoRight() {
-
-        // check if the tetraminoGridboxes is in the edge
-        if (this.tetraminoGridBoxes.getAttribute('data-edgeColumn') == 'true') {
-            console.log('hello world');
-        };
-
+        //check if adding 1 to the present grid columns would make it spill over beyond the edge columns
+        // select all the edgecolumns and loop through them.
+        let edgecolumns = document.querySelectorAll('[data-edgecolumn]');
+        edgecolumns.forEach((edgecolumn) => {
+            // loop through the present grid coordinates(positions) check if adding one would make it display beyound the edge column
+            this.tetraminoCoordinates.forEach((coordinate) => {
+                if (edgecolumn.getAttribute('data-gridBox') == coordinate + 1) clearInterval(m);
+            })
+        });
 
         // clean the tetramino
         this.cleanTetramino();
         // add 1 to the tetramino column coordinate so that it tends to the left
         this.tetraminoColumn += 1;
+
         // redraw the tetramino with the new coordinates
-        this.drawTetramino(this.tetraminoName, this.tetraminoDefaultView, this.tetraminoRow, this.tetraminoColumn);
+        this.drawTetramino(this.tetraminoName, this.tetraminoView, this.tetraminoRow, this.tetraminoColumn);
     }
 
     //------------------ move tetramino down by the second (call on interval)
@@ -297,9 +333,8 @@ class Tetris {
         // increment the column to start displaying by 10, as 10 columns will equal one row
         this.tetraminoColumn += 10;
         // draw the tetramino again with  the new coordinates
-        this.drawTetramino(this.tetraminoName, this.tetraminoDefaultView, this.tetraminoRow, this.tetraminoColumn);
+        this.drawTetramino(this.tetraminoName, this.tetraminoView, this.tetraminoRow, this.tetraminoColumn);
     }
-
 
     //---------------------- pull tetramino down (after user has selected a shape and wants to save time)
     pullTetraminoDown() {}
@@ -315,4 +350,12 @@ const tetris = new Tetris();
 // const gridBoxes = document.querySelectorAll('[data-gridBox]');
 
 tetris.selectTetramino();
-setInterval(() => tetris.moveTetraminoRight(), 1000)
+
+// key presses and key codes (set event listeners for key presses so as to rotate the keys, pull them down etc)
+document.addEventListener('keydown', event => {
+
+    // rotate tetramino
+    if (event.ctrlKey || event.which === 32) {
+        tetris.rotateTetramino();
+    }
+});
