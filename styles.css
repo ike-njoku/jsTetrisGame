@@ -1,0 +1,60 @@
+/* remove defaults  */
+
+html,
+body {
+    padding: 0px;
+    margin: 0px;
+}
+
+.main {
+    display: grid;
+    grid-template-columns: repeat(1fr, 6);
+}
+
+.container {
+    width: 200px;
+    display: grid;
+    grid-column: span 4;
+    grid-template-columns: repeat(10, 1fr);
+}
+
+.container div {
+    height: 20px;
+    width: 20px;
+    border: solid;
+}
+
+.box {
+    padding: 10%;
+    background: paleturquoise;
+    grid-column: span 2;
+}
+
+.scoreBoard {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: x-large;
+    font-weight: bolder;
+}
+
+
+/* colours of tetraminoes */
+
+.T-Tetramino {
+    background-color: red;
+}
+
+.L-Tetramino {
+    background-color: orangered;
+}
+
+.Box-Tetramino {
+    background-color: yellow;
+}
+
+.Z-Tetramino {
+    background-color: deepskyblue;
+}
+
+.I-Tetramino {
+    background-color: lightseagreen;
+}
