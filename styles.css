@@ -6,7 +6,6 @@ body {
     margin: 0px;
 }
 
-<<<<<<< HEAD
 .main {
     display: grid;
     grid-template-columns: repeat(1fr, 6);
@@ -15,12 +14,6 @@ body {
 .container {
     width: 200px;
     display: grid;
-    grid-column: span 4;
-=======
-.container {
-    width: 200px;
-    display: grid;
->>>>>>> 04f772f9e6897296da50c5eb8948af76277a6cd3
     grid-template-columns: repeat(10, 1fr);
 }
 
@@ -30,7 +23,6 @@ body {
     border: solid;
 }
 
-<<<<<<< HEAD
 .box {
     padding: 10%;
     background: paleturquoise;
@@ -43,8 +35,6 @@ body {
     font-weight: bolder;
 }
 
-=======
->>>>>>> 04f772f9e6897296da50c5eb8948af76277a6cd3
 
 /* colours of tetraminoes */
 
