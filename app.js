@@ -9,10 +9,7 @@
 
 // ---------------------------------------------------delete
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 04f772f9e6897296da50c5eb8948af76277a6cd3
 // define the tetris environment
 let tetrisEnvironment = document.querySelector('[data-tetrisContainer]');
 // create the grid boxes inside the tetris environment
@@ -35,11 +32,7 @@ while (numberOfGridBoxesBuilt < totalNumberOfGridBoxes) {
     let buildGridBox = document.createElement('div');
     // set an attribute that makes it easily selectable by this javascript file and the value of the attribute to be the total number of grid boxes built
     buildGridBox.setAttribute('data-gridBox', numberOfGridBoxesBuilt);
-<<<<<<< HEAD
 
-=======
-    // append the built gridbox to the gameEnvironment
->>>>>>> 04f772f9e6897296da50c5eb8948af76277a6cd3
     tetrisEnvironment.appendChild(buildGridBox);
 
     //---------- divide the environment into rows and columns
@@ -49,7 +42,6 @@ while (numberOfGridBoxesBuilt < totalNumberOfGridBoxes) {
     else y = numberOfGridBoxesBuilt % totalNumberOfColumns;
 
     buildGridBox.setAttribute('data-gridColumn', y);
-<<<<<<< HEAD
     // add gridRows attribute per gridbox
     buildGridBox.setAttribute('data-gridRow', gridRows);
 
@@ -67,18 +59,6 @@ while (numberOfGridBoxesBuilt < totalNumberOfGridBoxes) {
         // make the bottom sticky to trap tetraminoes
         buildGridBox.setAttribute('data-gridBoxStack', true);
 
-=======
-
-    // grid rows
-    if (numberOfGridBoxesBuilt % totalNumberOfColumns == 0 || numberOfGridBoxesBuilt % totalNumberOfColumns == 1) {
-        buildGridBox.setAttribute('data-gridRow', gridRows);
-        gridRows++;
-    }
-    // define the gridboxes in the last row
-    // if the built grid box (gridbox attribute) is less than the total number of gridboxes minus the total number of columns, it is in the bottom row
-    if (buildGridBox.getAttribute('data-gridBox') > totalNumberOfGridBoxes - totalNumberOfColumns - 1) {
-        buildGridBox.setAttribute('data-bottomRow', true);
->>>>>>> 04f772f9e6897296da50c5eb8948af76277a6cd3
     }
 
 
@@ -89,7 +69,6 @@ while (numberOfGridBoxesBuilt < totalNumberOfGridBoxes) {
     // inncrement the number of gridboxes built by adding one
     numberOfGridBoxesBuilt++;
 }
-<<<<<<< HEAD
 // select all the gridBoxes
 const gridBoxes = document.querySelectorAll('[data-gridBox]');
 
@@ -100,12 +79,6 @@ const allGridRows = document.querySelectorAll('[data-gridrow]');
 
 // score board
 const scoreBoard = document.querySelector('[data-scoreBoard]');
-=======
-const gridBoxes = document.querySelectorAll('[data-gridBox]');
-
-// -----------------------------------/delete
-
->>>>>>> 04f772f9e6897296da50c5eb8948af76277a6cd3
 
 
 const tetraminoes = [
@@ -182,66 +155,16 @@ const tetraminoes = [
 
 class Tetris {
     //---------------------------- build the game environment
-<<<<<<< HEAD
     buildGameEnvironment() {}
-=======
-    buildGameEnvironment() {
-        // define the tetris environment
-        let tetrisEnvironment = document.querySelector('[data-tetrisContainer]');
-        // create the grid boxes inside the tetris environment
-        let totalNumberOfGridBoxes = 221;
-        // number of grid boxes built
-        let numberOfGridBoxesBuilt = 1;
-        // grid rows (for easily placing tetraminoes)
-        let gridRows = 1;
-        // grid columns (for easily placing tetraminoes)
-        let gridColumns = 1;
-
-        // build using a while loop
-        while (numberOfGridBoxesBuilt < totalNumberOfGridBoxes) {
-            //---------build a new grid box (as a div element)
-            let buildGridBox = document.createElement('div');
-            // set an attribute that makes it easily selectable by this javascript file and the value of the attribute to be the total number of grid boxes built
-            buildGridBox.setAttribute('data-gridBox', numberOfGridBoxesBuilt);
-            // append the built gridbox to the gameEnvironment
-            tetrisEnvironment.appendChild(buildGridBox);
-
-            //---------- divide the environment into rows and columns
-            // grid position (y-coordinate)
-            let y = 0;
-            if (numberOfGridBoxesBuilt % totalNumberOfColumns == 0) y = totalNumberOfColumns;
-            else y = numberOfGridBoxesBuilt % totalNumberOfColumns;
-
-            buildGridBox.setAttribute('data-gridColumn', y);
-
-            // grid rows
-            if (numberOfGridBoxesBuilt % totalNumberOfColumns == 0 || numberOfGridBoxesBuilt % totalNumberOfColumns == 1) {
-                buildGridBox.setAttribute('data-gridRow', gridRows);
-                gridRows++;
-            }
-
-            // define the columns at the edges
-            if (numberOfGridBoxesBuilt % totalNumberOfColumns == 0 || numberOfGridBoxesBuilt % totalNumberOfColumns == 1) buildGridBox.setAttribute('data-edgeColumn', true);
-
-            // inncrement the number of gridboxes built by adding one
-            numberOfGridBoxesBuilt++;
-        }
-
-    }
->>>>>>> 04f772f9e6897296da50c5eb8948af76277a6cd3
 
     // -------basic game functionality
 
     //------------- start the game
-<<<<<<< HEAD
     startGame() {
         this.score = 0.00;
         this.interval = 700;
         this.gameTimer = setInterval(() => this.moveTetraminoDown(), this.interval)
     }
-=======
-    startGame() {}
->>>>>>> 04f772f9e6897296da50c5eb8948af76277a6cd3
 
     //------------- pause the game
     pauseGame() {}
@@ -289,12 +212,9 @@ class Tetris {
 
     // clear defaults (reste all tetramino properties )
     resetTetramino() {
-<<<<<<< HEAD
         this.rightEdge = '';
         this.leftEdge = '';
         this.interval = '';
-=======
->>>>>>> 04f772f9e6897296da50c5eb8948af76277a6cd3
         this.tetramino = '';
         this.tetraminoName = '';
         this.tetraminoViewOne = '';
@@ -307,7 +227,6 @@ class Tetris {
         this.selectTetramino();
     }
 
-<<<<<<< HEAD
 
     // ---------tetraminoes
     selectTetramino() {
@@ -315,13 +234,6 @@ class Tetris {
         //--------------------- select a random tetramino
         // the interval for moving tetraminoes
         this.interval = 700;
-=======
-    // ---------tetraminoes
-    selectTetramino() {
-
-
-        //--------------------- select a random tetramino
->>>>>>> 04f772f9e6897296da50c5eb8948af76277a6cd3
 
         // select a ranom index from the tetraminoes array  ( array of tetraminoes)
         let randomTetraminoInex = Math.floor(Math.random() * tetraminoes.length);
@@ -362,10 +274,7 @@ class Tetris {
         if (this.rightEdge) return;
 
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 04f772f9e6897296da50c5eb8948af76277a6cd3
         // reset edges(confer tetris.movetetraminoRight, tetris.moveTetraminoLeft)
         // so tha the tetraminoes would be able to rotate after having visited the edge boxes
         // visiting the leftedge for example would make you only able to move right so you have to reset it
@@ -415,10 +324,6 @@ class Tetris {
 
         this.tetraminoColumn -= 1;
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 04f772f9e6897296da50c5eb8948af76277a6cd3
         // redraw the tetramino with the new coordinates
         this.drawTetramino(this.tetraminoName, this.tetraminoView, this.tetraminoRow, this.tetraminoColumn);
     }
@@ -454,7 +359,6 @@ class Tetris {
     //------------------ move tetramino down by the second (call on interval)
     moveTetraminoDown() {
 
-<<<<<<< HEAD
         // check if the gridBoxes one row away (10 columns away) has a class list.
         // if it does, call the reset and function and drop the next this.tetramino;
 
@@ -477,20 +381,6 @@ class Tetris {
                         gridBox.setAttribute('data-gridBoxStack', true);
                 });
             });
-=======
-        // check the tetramino has reached the bottom row.
-        // if it has, select a new tetramino and start bringing it down
-        if (this.tetraminoGridBoxes.getAttribute('data-bottomRow')) {
-            // add a attribute of 'data-bottomRow' so that it sticks  and piles
-
-            // loop through gridBoxes and tetramino coordiinates and add an attribute of 'data-bottomRow'
-
-            gridBoxes.forEach((gridBox) => {
-                this.tetraminoCoordinates.forEach((coordinate) => {
-                    if (gridBox.getAttribute('data-gridBox') == coordinate - totalNumberOfColumns) gridBox.setAttribute('data-bottomRow', true);
-                })
-            })
->>>>>>> 04f772f9e6897296da50c5eb8948af76277a6cd3
             this.resetTetramino();
         }
 
@@ -501,7 +391,6 @@ class Tetris {
         this.tetraminoColumn += totalNumberOfColumns;
         // draw the tetramino again with  the new coordinates
         this.drawTetramino(this.tetraminoName, this.tetraminoView, this.tetraminoRow, this.tetraminoColumn);
-<<<<<<< HEAD
 
         clearInterval(this.gameTimer);
         this.gameTimer = setInterval(() => this.moveTetraminoDown(), this.interval);
@@ -554,14 +443,6 @@ class Tetris {
 
 
     // ----------class ends
-=======
-    }
-
-    //---------------------- pull tetramino down (after user has selected a shape and wants to save time)
-    pullTetraminoDown() {}
-
-
->>>>>>> 04f772f9e6897296da50c5eb8948af76277a6cd3
 }
 
 // create an instanceof the tetris game
@@ -570,11 +451,7 @@ tetris.selectTetramino();
 
 
 // key presses and key codes (set event listeners for key presses so as to rotate the keys, pull them down etc)
-<<<<<<< HEAD
 document.addEventListener('keyup', event => {
-=======
-document.addEventListener('keydown', event => {
->>>>>>> 04f772f9e6897296da50c5eb8948af76277a6cd3
 
     // rotate tetramino (spacebar / control key)
     if (event.which === 32) {
@@ -589,7 +466,6 @@ document.addEventListener('keydown', event => {
     if (event.which === 39) {
         tetris.moveTetraminoRight();
     }
-<<<<<<< HEAD
 
     // pull tetramino down
     if (event.which === 40) {
@@ -600,10 +476,3 @@ document.addEventListener('keydown', event => {
 
 // start the game
 tetris.startGame();
-=======
-});
-
-
-// set interval to move the tetramino down ?
-var moveTetrmino = setInterval(() => tetris.moveTetraminoDown(), 700)
->>>>>>> 04f772f9e6897296da50c5eb8948af76277a6cd3
