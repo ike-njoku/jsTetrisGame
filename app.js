@@ -412,6 +412,8 @@ class Tetris {
     awardPoint() {
         // the current gridRow whose completeness is being checked
         let currentGridRow = 22;
+
+
         let completeGridBoxesInRow = 0;
         gridBoxes.forEach((gridBox) => {
             if (gridBox.getAttribute('data-gridRow') == currentGridRow && gridBox.classList.length > 0) {
@@ -423,13 +425,8 @@ class Tetris {
                         if (gridBoxToClear.getAttribute('data-gridrow') == currentGridRow) {
                             // clear the class List
                             gridBoxToClear.classList = '';
-                        } else {
-                            // -----------if the gridbox is not to be cleared, pull it down until it touches the bottom or
-                            //----------- touches the next gridBoxStack
 
-                            //find the current location of each coloured gridBox on the screen
-                            // check if it can be moved down by one column. if it can, pull it down and keep pulling it down until it
-                            // touches either the bottom or the next gridBoxStack
+                            this.adjustGridBoxes();
 
                         }
                     });
@@ -439,6 +436,17 @@ class Tetris {
 
             }
         })
+
+
+
+
+
+    }
+
+
+
+    adjustGridBoxes() {
+        console.log('hello world');
     }
 
 
